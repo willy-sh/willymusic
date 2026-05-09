@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WillyMusic</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="app">
+
+<!-- PARTE 1 — William Axel Sánchez Hernández
+     Estructura base y contenido de la página
+     - Menú lateral con navegación, ícono y playlists
+     - Barra superior con búsqueda y botones de cuenta
+     - Portada, tendencias, artistas, géneros y pie de página
+     - Columna izquierda del reproductor con portada y título -->
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-note">♪</span>
+      <span class="logo-name">WillyMusic</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#featured" class="snav-link active" data-section="featured">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Inicio
+      </a>
+      <a href="#search" class="snav-link" data-section="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Buscar
+      </a>
+      <a href="#trending" class="snav-link" data-section="trending">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        Tendencias
+      </a>
+      <a href="#artists" class="snav-link" data-section="artists">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        Artistas
+      </a>
+      <a href="#genres" class="snav-link" data-section="genres">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        Géneros
+      </a>
+    </nav>
+
+    <div class="sidebar-library">
+      <p class="lib-heading">TU BIBLIOTECA</p>
+      <div class="lib-playlist" onclick="playTrack(0)">
+        <div class="lib-thumb" style="background:linear-gradient(135deg,#1a0533,#c026d3)"></div>
+        <div><p>Chill Vibes</p><span>Playlist · 48 canciones</span></div>
+      </div>
+      <div class="lib-playlist" onclick="playTrack(1)">
+        <div class="lib-thumb" style="background:linear-gradient(135deg,#0f172a,#ec4899)"></div>
+        <div><p>Pump Up</p><span>Playlist · 33 canciones</span></div>
+      </div>
+      <div class="lib-playlist" onclick="playTrack(2)">
+        <div class="lib-thumb" style="background:linear-gradient(135deg,#422006,#fbbf24)"></div>
+        <div><p>Late Night Drive</p><span>Playlist · 55 canciones</span></div>
+      </div>
+      <div class="lib-playlist" onclick="playTrack(3)">
+        <div class="lib-thumb" style="background:linear-gradient(135deg,#450a0a,#ef4444)"></div>
+        <div><p>Hip-Hop Essentials</p><span>Playlist · 40 canciones</span></div>
+      </div>
+      <div class="lib-playlist" onclick="playTrack(4)">
+        <div class="lib-thumb" style="background:linear-gradient(135deg,#431407,#f97316)"></div>
+        <div><p>Fuego Latino</p><span>Playlist · 62 canciones</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="nav-arrow" onclick="history.back()">&#8249;</button>
+        <button class="nav-arrow" onclick="history.forward()">&#8250;</button>
+      </div>
+      <div class="topbar-center">
+        <div class="search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Artistas, canciones, géneros…" />
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn-signup">Registrarse</button>
+        <button class="btn-login">Iniciar sesión</button>
+      </div>
+    </header>
+
+    <main class="content-area" id="featured">
+
+      <section class="hero-section" id="hero-section">
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-body">
+          <div class="hero-art">
+            <img id="heroArt"
+              src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=320&h=320&q=80"
+              alt="Album art"/>
+            <button class="hero-play-btn" onclick="togglePlay()">
+              <svg id="hPlayIcon" width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <svg id="hPauseIcon" width="28" height="28" viewBox="0 0 24 24" fill="white" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            </button>
+          </div>
+          <div class="hero-info">
+            <span class="hero-type">Canción popular</span>
+            <h1 class="hero-title" id="heroTitle">Midnight Drive</h1>
+            <p class="hero-meta"><span id="heroArtist">The Weeknd</span> · <span id="heroAlbum">After Hours</span> · 2020</p>
+            <div class="hero-actions">
+              <button class="btn-play-big" onclick="togglePlay()">
+                <svg id="bigPlayIcon" width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <svg id="bigPauseIcon" width="22" height="22" viewBox="0 0 24 24" fill="white" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                <span id="bigBtnText">Reproducir</span>
+              </button>
+              <button class="btn-outline" onclick="nextTrack()">Siguiente →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block" id="trending">
+        <div class="section-hdr">
+          <h2>Tendencias globales</h2>
+          <a href="#">Ver todo</a>
+        </div>
+        <div class="tracks-grid" id="tracksGrid"></div>
+      </section>
+
+      <section class="section-block" id="artists">
+        <div class="section-hdr">
+          <h2>Artistas destacados</h2>
+          <a href="#">Ver todos</a>
+        </div>
+        <div class="artists-grid" id="artistsGrid"></div>
+      </section>
+
+      <section class="section-block" id="genres">
+        <div class="section-hdr"><h2>Explorar géneros</h2></div>
+        <div class="genres-grid">
+          <a class="genre-tile gt-pop" href="#" onclick="filterGenre(this,'Pop')">
+            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=300&h=160&q=80" alt="Pop"/>
+            <span>Pop</span>
+          </a>
+          <a class="genre-tile gt-hiphop" href="#" onclick="filterGenre(this,'Hip-Hop')">
+            <img src="https://images.unsplash.com/photo-1601643157091-ce5c665179ab?auto=format&fit=crop&w=300&h=160&q=80" alt="Hip-Hop"/>
+            <span>Hip-Hop</span>
+          </a>
+          <a class="genre-tile gt-electronic" href="#" onclick="filterGenre(this,'Electrónica')">
+            <img src="https://images.unsplash.com/photo-1571266028243-d220c6a7edbf?auto=format&fit=crop&w=300&h=160&q=80" alt="Electrónica"/>
+            <span>Electrónica</span>
+          </a>
+          <a class="genre-tile gt-rock" href="#" onclick="filterGenre(this,'Rock')">
+            <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?auto=format&fit=crop&w=300&h=160&q=80" alt="Rock"/>
+            <span>Rock</span>
+          </a>
+          <a class="genre-tile gt-jazz" href="#" onclick="filterGenre(this,'Jazz')">
+            <img src="https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?auto=format&fit=crop&w=300&h=160&q=80" alt="Jazz"/>
+            <span>Jazz</span>
+          </a>
+          <a class="genre-tile gt-classical" href="#" onclick="filterGenre(this,'Clásica')">
+            <img src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&w=300&h=160&q=80" alt="Clásica"/>
+            <span>Clásica</span>
+          </a>
+          <a class="genre-tile gt-latin" href="#" onclick="filterGenre(this,'Latina')">
+            <img src="https://images.unsplash.com/photo-1541293712104-77db9e7752ea?auto=format&fit=crop&w=300&h=160&q=80" alt="Latina"/>
+            <span>Latina</span>
+          </a>
+          <a class="genre-tile gt-rnb" href="#" onclick="filterGenre(this,'R&B')">
+            <img src="https://images.unsplash.com/photo-1493676304819-0d7a8d026dcf?auto=format&fit=crop&w=300&h=160&q=80" alt="R&B"/>
+            <span>R&amp;B / Soul</span>
+          </a>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="logo-row"><span class="logo-note">♪</span><span class="logo-name">WillyMusic</span></div>
+            <p>Tu universo musical en un solo lugar.</p>
+            <div class="footer-socials">
+              <a href="#" class="soc">ig</a>
+              <a href="#" class="soc">tw</a>
+              <a href="#" class="soc">tt</a>
+              <a href="#" class="soc">yt</a>
+            </div>
+          </div>
+          <div class="footer-col"><h4>Producto</h4><a href="#">Premium</a><a href="#">Para artistas</a><a href="#">Empresas</a></div>
+          <div class="footer-col"><h4>Descubrir</h4><a href="#">Charts</a><a href="#">Géneros</a><a href="#">Radio</a></div>
+          <div class="footer-col"><h4>Soporte</h4><a href="#">Ayuda</a><a href="#">Privacidad</a><a href="#">Términos</a></div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 WillyMusic. Todos los derechos reservados.</span>
+          <span class="footer-credit">Desarrollado por <strong>William Axel Sánchez Hernández</strong></span>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <div class="player-bar" id="playerBar">
+    <div class="pb-left">
+      <img class="pb-art" id="pbArt"
+        src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=80&h=80&q=80"
+        alt="cover"/>
+      <div class="pb-info">
+        <p class="pb-title"  id="pbTitle">Midnight Drive</p>
+        <p class="pb-artist" id="pbArtist">The Weeknd</p>
+      </div>
+      <button class="pb-heart" id="pbHeart" onclick="toggleHeart(this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      </button>
+    </div>
+
+<!-- PARTE 2 — Roberto
+     Controles del reproductor y lógica de JavaScript
+     - Controles de reproducción: play, pausa, anterior, siguiente
+     - Barra de progreso con tiempo actual de la canción
+     - Datos de canciones y artistas con sus imágenes
+     - Funciones para mostrar canciones y cambiar de pista
+     - Estado del reproductor: shuffle, repeat y temporizador -->
+
+    <div class="pb-center">
+      <div class="pb-controls">
+        <button class="pb-btn pb-shuffle" onclick="toggleShuffle(this)" title="Aleatorio">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/>
+            <polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/>
+          </svg>
+        </button>
+        <button class="pb-btn" onclick="prevTrack()" title="Anterior">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 20L9 12l10-8v16zm-8-8l-7 5.5V6.5L11 12z"/></svg>
+        </button>
+        <button class="pb-play" id="pbPlayBtn" onclick="togglePlay()">
+          <svg id="pbPlayIcon"  width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <svg id="pbPauseIcon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+        <button class="pb-btn" onclick="nextTrack()" title="Siguiente">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l10 8-10 8V4zm8 0v16l8-8-8-8z"/></svg>
+        </button>
+        <button class="pb-btn pb-repeat" onclick="toggleRepeat(this)" title="Repetir">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+        </button>
+      </div>
+      <div class="pb-progress">
+        <span class="pb-time" id="pbCurrent">0:00</span>
+        <div class="pb-bar" onclick="seekTrack(event, this)">
+          <div class="pb-bar-fill" id="pbFill"></div>
+          <div class="pb-thumb" id="pbThumb"></div>
+        </div>
+        <span class="pb-time">4:12</span>
+      </div>
+    </div>
+
+    <div class="pb-right">
+      <div class="pb-visualizer" id="pbVisualizer">
+        <div class="pv-bar"></div><div class="pv-bar"></div><div class="pv-bar"></div>
+        <div class="pv-bar"></div><div class="pv-bar"></div>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="opacity:.5;flex-shrink:0">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/>
+      </svg>
+      <input type="range" class="vol-slider" min="0" max="1" step="0.02" value="0.65"
+        oninput="WillyPlayer.setVolume(this.value)"/>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const TRACKS = [
+  {
+    title:'Midnight Drive', artist:'The Weeknd', album:'After Hours',
+    art:'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=320&h=320&q=80',
+    color:'#6B21A8', genre:'R&B', plays:'128M', liked:false,
+  },
+  {
+    title:'Electric Soul', artist:'Dua Lipa', album:'Future Nostalgia',
+    art:'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=320&h=320&q=80',
+    color:'#BE185D', genre:'Pop', plays:'95M', liked:false,
+  },
+  {
+    title:'Golden Hour', artist:'Kacey Musgraves', album:'Golden Hour',
+    art:'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=320&h=320&q=80',
+    color:'#92400E', genre:'Pop', plays:'87M', liked:false,
+  },
+  {
+    title:'DNA.', artist:'Kendrick Lamar', album:'DAMN.',
+    art:'https://images.unsplash.com/photo-1591980587510-efed7aacbab2?auto=format&fit=crop&w=320&h=320&q=80',
+    color:'#991B1B', genre:'Hip-Hop', plays:'210M', liked:false,
+  },
+  {
+    title:'Con Altura', artist:'Rosalía', album:'El Mal Querer',
+    art:'https://images.unsplash.com/photo-1470784591255-6c7c80d419c8?auto=format&fit=crop&w=320&h=320&q=80',
+    color:'#C2410C', genre:'Latina', plays:'340M', liked:false,
+  },
+];
+
+const ARTISTS = [
+  { name:'Billie Eilish', genre:'Pop / Alternativo', followers:'89M',  wiki:'Billie_Eilish' },
+  { name:'Bad Bunny',     genre:'Reggaetón / Trap',  followers:'121M', wiki:'Bad_Bunny' },
+  { name:'Taylor Swift',  genre:'Pop / Country',     followers:'104M', wiki:'Taylor_Swift' },
+  { name:'Kendrick Lamar',genre:'Hip-Hop / Rap',     followers:'67M',  wiki:'Kendrick_Lamar' },
+  { name:'Rosalía',       genre:'Flamenco / Pop',    followers:'42M',  wiki:'Rosal%C3%ADa' },
+];
+
+let currentIdx  = 0;
+let shuffleOn   = false;
+let repeatOn    = false;
+let fakeSeconds = 0;
+
+function renderTracks() {
+  const grid = document.getElementById('tracksGrid');
+  grid.innerHTML = TRACKS.map((t, i) => `
+    <div class="track-card ${i===currentIdx?'track-active':''}" id="track-${i}" onclick="playTrack(${i})">
+      <div class="tc-img-wrap">
+        <img src="${t.art}" alt="${t.title}" loading="lazy"/>
+        <div class="tc-overlay">
+          <span class="tc-play-btn">${i===currentIdx&&WillyPlayer.isPlaying?'❚❚':'▶'}</span>
+        </div>
+      </div>
+      <div class="tc-body">
+        <div class="tc-num">${i===currentIdx&&WillyPlayer.isPlaying
+          ? '<span class="eq-anim"><i></i><i></i><i></i></span>'
+          : (i+1)}</div>
+        <div class="tc-info">
+          <p class="tc-title">${t.title}</p>
+          <p class="tc-artist">${t.artist}</p>
+        </div>
+        <span class="tc-genre">${t.genre}</span>
+        <button class="tc-heart ${t.liked?'liked':''}"
+          onclick="event.stopPropagation(); likeTrack(${i}, this)">
+          <svg width="14" height="14" viewBox="0 0 24 24"
+            fill="${t.liked?'currentColor':'none'}" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+        </button>
+        <span class="tc-plays">${t.plays}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderArtists() {
+  const grid = document.getElementById('artistsGrid');
+  grid.innerHTML = ARTISTS.map((a, i) => `
+    <div class="artist-card" onclick="playTrack(${i})">
+      <div class="ac-img-wrap">
+        <img class="ac-img" id="ac-img-${i}"
+          src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=300&h=300&q=80"
+          alt="${a.name}" loading="lazy"/>
+        <div class="ac-hover">▶</div>
+      </div>
+      <p class="ac-name">${a.name}</p>
+      <p class="ac-genre">${a.genre}</p>
+      <p class="ac-followers">${a.followers} seguidores</p>
+      <button class="ac-follow" onclick="event.stopPropagation(); toggleFollow(this)">Seguir</button>
+    </div>
+  `).join('');
+
+  ARTISTS.forEach((a, i) => {
+    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${a.wiki}`)
+      .then(r => r.json())
+      .then(d => {
+        const img = document.getElementById(`ac-img-${i}`);
+        if (img && d.thumbnail && d.thumbnail.source) img.src = d.thumbnail.source;
+      })
+      .catch(() => {});
+  });
+}
+
+function updateUI() {
+  const t = TRACKS[currentIdx];
+  document.getElementById('heroArt').src              = t.art;
+  document.getElementById('heroTitle').textContent    = t.title;
+  document.getElementById('heroArtist').textContent   = t.artist;
+  document.getElementById('heroAlbum').textContent    = t.album;
+  document.getElementById('heroBg').style.backgroundImage = `url(${t.art})`;
+  document.getElementById('pbArt').src                = t.art;
+  document.getElementById('pbTitle').textContent      = t.title;
+  document.getElementById('pbArtist').textContent     = t.artist;
+  document.documentElement.style.setProperty('--dyn', t.color);
+  document.querySelectorAll('.lib-playlist').forEach((el, i) => {
+    el.classList.toggle('lib-active', i === currentIdx);
+  });
+  renderTracks();
+}
+
+function playTrack(idx) {
+  currentIdx = idx;
+  fakeSeconds = 0;
+  updateUI();
+  if (!WillyPlayer.isPlaying) {
+    WillyPlayer.play(idx);
+    setPlayState(true);
+  } else {
+    WillyPlayer.switchTrack(idx);
+  }
+  document.getElementById('featured').scrollIntoView({ behavior:'smooth' });
+}
+
+async function togglePlay() {
+  if (!WillyPlayer.isPlaying) {
+    await WillyPlayer.play(currentIdx);
+    setPlayState(true);
+  } else {
+    await WillyPlayer.pause();
+    setPlayState(false);
+  }
+}
+
+function prevTrack() {
+  currentIdx = (currentIdx - 1 + TRACKS.length) % TRACKS.length;
+  fakeSeconds = 0;
+  updateUI();
+  if (WillyPlayer.isPlaying) WillyPlayer.switchTrack(currentIdx);
+}
+
+function nextTrack() {
+  currentIdx = shuffleOn
+    ? Math.floor(Math.random() * TRACKS.length)
+    : (currentIdx + 1) % TRACKS.length;
+  fakeSeconds = 0;
+  updateUI();
+  if (WillyPlayer.isPlaying) WillyPlayer.switchTrack(currentIdx);
+}
+
+function setPlayState(playing) {
+  document.getElementById('pbPlayIcon').style.display   = playing ? 'none'  : 'block';
+  document.getElementById('pbPauseIcon').style.display  = playing ? 'block' : 'none';
+  document.getElementById('hPlayIcon').style.display    = playing ? 'none'  : 'block';
+  document.getElementById('hPauseIcon').style.display   = playing ? 'block' : 'none';
+  document.getElementById('bigPlayIcon').style.display  = playing ? 'none'  : 'block';
+  document.getElementById('bigPauseIcon').style.display = playing ? 'block' : 'none';
+  document.getElementById('bigBtnText').textContent     = playing ? 'Pausar' : 'Reproducir';
+  document.getElementById('pbVisualizer').classList.toggle('vis-active', playing);
+  renderTracks();
+}
+
+setInterval(() => {
+  if (!WillyPlayer.isPlaying) return;
+  fakeSeconds = Math.min(fakeSeconds + 1, 252);
+  const pct = fakeSeconds / 252;
+  document.getElementById('pbFill').style.width = (pct * 100) + '%';
+  document.getElementById('pbThumb').style.left = (pct * 100) + '%';
+  const m = Math.floor(fakeSeconds/60), s = fakeSeconds%60;
+  document.getElementById('pbCurrent').textContent = `${m}:${String(s).padStart(2,'0')}`;
+  if (fakeSeconds >= 252) { repeatOn ? (fakeSeconds = 0) : nextTrack(); }
+}, 1000);
+
+// PARTE 3 — Isra
+// Interactividad y motor de audio
+// - Funciones para buscar posición, dar like y seguir artistas
+// - Activación de shuffle, repeat y filtro por género
+// - Configuraciones de audio para cada una de las 5 canciones
+// - Motor de sonido con batería, bajo, acordes y melodía
+// - Imágenes reales de artistas cargadas desde Wikipedia
+
+function seekTrack(e, bar) {
+  const pct = Math.max(0, Math.min(1, e.offsetX / bar.offsetWidth));
+  fakeSeconds = Math.floor(pct * 252);
+  document.getElementById('pbFill').style.width = (pct * 100) + '%';
+  document.getElementById('pbThumb').style.left = (pct * 100) + '%';
+}
+
+function likeTrack(idx, btn) {
+  TRACKS[idx].liked = !TRACKS[idx].liked;
+  btn.classList.toggle('liked', TRACKS[idx].liked);
+  btn.querySelector('svg').setAttribute('fill', TRACKS[idx].liked ? 'currentColor' : 'none');
+  if (idx === currentIdx) {
+    const pbH = document.getElementById('pbHeart');
+    pbH.classList.toggle('liked', TRACKS[idx].liked);
+    pbH.querySelector('svg').setAttribute('fill', TRACKS[idx].liked ? 'currentColor' : 'none');
+  }
+}
+
+function toggleHeart(btn) { likeTrack(currentIdx, btn); }
+
+function toggleFollow(btn) {
+  const on = btn.textContent.trim() === '✓ Siguiendo';
+  btn.textContent = on ? 'Seguir' : '✓ Siguiendo';
+  btn.classList.toggle('following', !on);
+}
+
+function toggleShuffle(btn) {
+  shuffleOn = !shuffleOn;
+  btn.classList.toggle('ctrl-active', shuffleOn);
+}
+
+function toggleRepeat(btn) {
+  repeatOn = !repeatOn;
+  btn.classList.toggle('ctrl-active', repeatOn);
+}
+
+function filterGenre(el, name) {
+  document.querySelectorAll('.genre-tile').forEach(g => g.classList.remove('genre-active'));
+  el.classList.add('genre-active');
+  return false;
+}
+
+document.querySelectorAll('.snav-link').forEach(link => {
+  link.addEventListener('click', function() {
+    document.querySelectorAll('.snav-link').forEach(l => l.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+const CONFIGS = [
+  { bpm:92,
+    kick: [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+    snare:[0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+    hat:  [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+    chords:[[220,261.63,329.63],[207.65,261.63,311.13],[196,246.94,293.66],[174.61,220,261.63]],
+    bass:[110,103.83,98,87.31],
+    mel: [880,830.61,783.99,739.99,698.46,659.25,622.25,587.33],
+    kickV:0.9,padV:0.07,bassV:0.4,melV:0.1,padType:'triangle' },
+
+  { bpm:118,
+    kick: [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
+    snare:[0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+    hat:  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    chords:[[293.66,369.99,440],[261.63,329.63,392],[329.63,415.30,493.88],[349.23,440,523.25]],
+    bass:[146.83,130.81,164.81,174.61],
+    mel: [587.33,659.25,698.46,659.25,587.33,523.25,587.33,523.25],
+    kickV:1.0,padV:0.09,bassV:0.5,melV:0.15,padType:'sine' },
+
+  { bpm:70,
+    kick: [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+    snare:[0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0],
+    hat:  [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
+    chords:[[196,246.94,293.66],[174.61,220,261.63],[220,277.18,329.63],[261.63,329.63,392]],
+    bass:[98,87.31,110,130.81],
+    mel: [392,440,493.88,523.25,587.33,523.25,493.88,440],
+    kickV:0.6,padV:0.1,bassV:0.3,melV:0.12,padType:'triangle' },
+
+  { bpm:88,
+    kick: [1,0,0,1,0,0,1,0,1,0,0,0,0,1,0,0],
+    snare:[0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0],
+    hat:  [1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1],
+    chords:[[196,233.08,293.66],[196,233.08,293.66],[233.08,293.66,349.23],[174.61,207.65,261.63]],
+    bass:[98,98,116.54,87.31],
+    mel: [392,349.23,392,440,392,349.23,311.13,293.66],
+    kickV:1.0,padV:0.06,bassV:0.5,melV:0.08,padType:'sawtooth' },
+
+  { bpm:100,
+    kick: [1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0],
+    snare:[0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+    hat:  [1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1],
+    chords:[[185,233.08,277.18],[185,233.08,277.18],[220,277.18,329.63],[164.81,207.65,246.94]],
+    bass:[92.50,92.50,110,82.41],
+    mel: [739.99,698.46,659.25,622.25,587.33,554.37,523.25,493.88],
+    kickV:0.85,padV:0.08,bassV:0.45,melV:0.11,padType:'triangle' },
+];
+
+const WillyPlayer = {
+  ctx:null, master:null, analyser:null,
+  isPlaying:false, nextTime:0, timerID:null, rafID:null, trackIdx:0,
+
+  init() {
+    this.ctx    = new (window.AudioContext||window.webkitAudioContext)();
+    this.master = this.ctx.createGain();
+    this.master.gain.value = 0.65;
+    const rev = this.ctx.createConvolver();
+    const len = this.ctx.sampleRate * 2;
+    const buf = this.ctx.createBuffer(2, len, this.ctx.sampleRate);
+    for (let c=0;c<2;c++){const d=buf.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.5);}
+    rev.buffer = buf;
+    const rg = this.ctx.createGain(); rg.gain.value = 0.1;
+    this.master.connect(rev); rev.connect(rg); rg.connect(this.ctx.destination);
+    this.master.connect(this.ctx.destination);
+    this.analyser = this.ctx.createAnalyser();
+    this.analyser.fftSize = 32;
+    this.master.connect(this.analyser);
+  },
+
+  n(freq,t,dur,type='triangle',vol=0.2){
+    const o=this.ctx.createOscillator(),g=this.ctx.createGain();
+    o.type=type; o.frequency.value=freq;
+    g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g);g.connect(this.master);o.start(t);o.stop(t+dur+.01);
+  },
+
+  kick(t,vol=0.9){
+    const o=this.ctx.createOscillator(),g=this.ctx.createGain();
+    o.type='sine';
+    o.frequency.setValueAtTime(160,t); o.frequency.exponentialRampToValueAtTime(.01,t+.4);
+    g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(.0001,t+.4);
+    o.connect(g);g.connect(this.master);o.start(t);o.stop(t+.41);
+  },
+
+  snare(t){
+    const b=this.ctx.createBuffer(1,this.ctx.sampleRate*.12,this.ctx.sampleRate);
+    const d=b.getChannelData(0); for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+    const s=this.ctx.createBufferSource(); s.buffer=b;
+    const f=this.ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=2800;
+    const g=this.ctx.createGain();
+    g.gain.setValueAtTime(.4,t); g.gain.exponentialRampToValueAtTime(.0001,t+.12);
+    s.connect(f);f.connect(g);g.connect(this.master);s.start(t);s.stop(t+.13);
+    this.n(180,t,.06,'sine',.25);
+  },
+
+  hihat(t,open=false){
+    const b=this.ctx.createBuffer(1,this.ctx.sampleRate*.05,this.ctx.sampleRate);
+    const d=b.getChannelData(0); for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+    const s=this.ctx.createBufferSource(); s.buffer=b;
+    const f=this.ctx.createBiquadFilter(); f.type='highpass'; f.frequency.value=9500;
+    const g=this.ctx.createGain(), dur=open?.13:.03;
+    g.gain.setValueAtTime(.2,t); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    s.connect(f);f.connect(g);g.connect(this.master);s.start(t);s.stop(t+dur+.01);
+  },
+
+  bass(freq,t,dur,vol=0.4){
+    const o=this.ctx.createOscillator(),f=this.ctx.createBiquadFilter(),g=this.ctx.createGain();
+    o.type='sawtooth'; o.frequency.value=freq;
+    f.type='lowpass'; f.frequency.value=290;
+    g.gain.setValueAtTime(vol,t); g.gain.setValueAtTime(vol*.85,t+dur*.6); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(f);f.connect(g);g.connect(this.master);o.start(t);o.stop(t+dur+.01);
+  },
+
+  pad(freqs,t,dur,type,vol){
+    freqs.forEach(f=>{
+      const o=this.ctx.createOscillator(),g=this.ctx.createGain();
+      o.type=type; o.frequency.value=f;
+      g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+.06);
+      g.gain.setValueAtTime(vol,t+dur-.08); g.gain.linearRampToValueAtTime(0,t+dur);
+      o.connect(g);g.connect(this.master);o.start(t);o.stop(t+dur+.01);
+    });
+  },
+
+  scheduleBar(t0,cfg){
+    const s16=(60/cfg.bpm)/4;
+    for(let i=0;i<16;i++){
+      const t=t0+i*s16;
+      if(cfg.kick[i])  this.kick(t,cfg.kickV);
+      if(cfg.snare[i]) this.snare(t);
+      if(cfg.hat[i])   this.hihat(t,i%4===2);
+    }
+    for(let i=0;i<4;i++){
+      const t=t0+i*s16*4;
+      this.bass(cfg.bass[i],t,s16*3.8,cfg.bassV);
+      this.pad(cfg.chords[i],t,s16*4.1,cfg.padType,cfg.padV);
+    }
+    cfg.mel.forEach((f,i)=>{
+      if(Math.random()>.12) this.n(f,t0+i*s16*2,s16*1.4,'triangle',cfg.melV);
+    });
+    return t0+16*s16;
+  },
+
+  startScheduler(idx){
+    const cfg=CONFIGS[idx];
+    const tick=()=>{
+      if(!this.isPlaying) return;
+      while(this.nextTime<this.ctx.currentTime+0.25)
+        this.nextTime=this.scheduleBar(this.nextTime,cfg);
+      this.timerID=setTimeout(tick,50);
+    };
+    tick();
+  },
+
+  startViz(){
+    const bars=document.querySelectorAll('.pv-bar');
+    const data=new Uint8Array(this.analyser.frequencyBinCount);
+    const draw=()=>{
+      if(!this.isPlaying) return;
+      this.analyser.getByteFrequencyData(data);
+      bars.forEach((b,i)=>{
+        const v=(data[i*2]||0)/255;
+        b.style.height=Math.max(3,v*22)+'px';
+      });
+      this.rafID=requestAnimationFrame(draw);
+    };
+    draw();
+  },
+
+  async play(idx){
+    if(!this.ctx) this.init();
+    if(this.ctx.state==='suspended') await this.ctx.resume();
+    this.trackIdx=idx; this.isPlaying=true;
+    this.nextTime=this.ctx.currentTime+.05;
+    clearTimeout(this.timerID);
+    this.startScheduler(idx);
+    cancelAnimationFrame(this.rafID);
+    this.startViz();
+  },
+
+  switchTrack(idx){
+    clearTimeout(this.timerID);
+    cancelAnimationFrame(this.rafID);
+    this.trackIdx=idx;
+    this.nextTime=this.ctx.currentTime+.05;
+    this.startScheduler(idx);
+    this.startViz();
+  },
+
+  async pause(){
+    this.isPlaying=false;
+    clearTimeout(this.timerID);
+    cancelAnimationFrame(this.rafID);
+    document.querySelectorAll('.pv-bar').forEach(b=>b.style.height='3px');
+    await this.ctx.suspend();
+  },
+
+  setVolume(v){ if(this.master) this.master.gain.value=parseFloat(v); },
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderTracks();
+  renderArtists();
+  updateUI();
+});
+</script>
+
+</body>
+</html>
